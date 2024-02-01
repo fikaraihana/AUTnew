@@ -30,7 +30,7 @@ jobs:
         run: curl ${{ env.URL }}
       
       - name: Selenium Preparation
-        run: docker run --network=isolated -d -p 4444:4444 -p 7900:7900 -v /dev/shm:/dev/shm --name firefox-standalone selenium/standalone-firefox:latest
+        run: docker compose up -d
       
       - name: Wait for Selenium Hub
         run: sh wait.sh
@@ -41,8 +41,14 @@ jobs:
       - name: Install Selenium client
         run: pip install -U selenium
 
+      - name: Install python parallel
+        run: pip install pytest-xdist
+
+      - name: move dir
+        run: cd test
+
       - name: Run test
-        run: python tests/hello_aut.py ${{ env.URL }}
+        run: pytest -v -n 3 ${{ env.URL }}
         
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4

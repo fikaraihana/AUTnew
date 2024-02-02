@@ -51,7 +51,7 @@ jobs:
         run: pip install pytest-xdist
 
       - name: Run test
-        run: pytest -v -n 3 ${{ env.URL }}
+        run: pytest -v -n 3 ${{ env.URL }} tests/
         
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4

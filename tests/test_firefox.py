@@ -14,10 +14,7 @@ class AutTest(unittest.TestCase):
         self.addCleanup(self.browser.quit)
 
     def test_homepage(self):
-        if len(sys.argv) > 1:
-            url = sys.argv[1]
-        else:
-            url = "http://localhost"
+        url = os.environ.get('URL')
 
         self.browser.get(url)
         self.browser.save_screenshot('screenshot.png')
